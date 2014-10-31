@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+<title>Hello Yaf</title>
+</head>
+
+<body>
+<div class="input-group">
+    <textarea class="form-control pull-left" placeholder="写点什么吧！"></textarea>
+    <div class="btn-group ">
+        <button class="btn add">添加</button>
+    </div>
+</div>
+
+<ol class="list">
+    {% for item in list %}
+        <li data-id="{{item._id}}">{{item.content}}<button type='button' class='close'>×</button></li>
+    {% endfor %}
+</ol>
+
+
+<script src="http://libs.useso.com/js/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $(".btn.add").click(function(){
+        $.post("/index/add",{"content":$(".form-control").val()},function(e){ 
+            if(e.err){ alert(e.err_msg); }
+            else{ window.location.reload(); }
+        });
+    });
+    $(".close").click(function(){
+        var _li = $(this).parent();
+        var id=_li.data("id");
+        $.get("/index/del?id="+id,function(e){
+            if(e.err){ alert(e.err_msg); }
+            else{
+                _li.remove();
+            }
+        });
+    });
+</script>
+</body>
+</html>
