@@ -1,0 +1,25 @@
+{
+  "name": "zhangkai",
+  "version": "1.0.0",
+  "homepage": "https://github.com/zkdfbb/yaf-todo",
+  "authors": [
+    "deeker <zkdfbb@163.com>"
+  ],
+  "description": "zhangkai's project",
+  "main": "app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+     "requirejs": "~2.1.15",
+     "jquery": "~2.1.1",
+     "bootstrap": "~3.3.0",
+     "modernizr": "~2.8.3"
+  }
+}

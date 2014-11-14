@@ -13,6 +13,7 @@ class IndexController extends Yaf_Controller_Abstract {
      * 对于如下的例子, 当访问http://yourhost/sample/index/index/index/name/digua 的时候, 你就会发现不同
      */
 
+    use Auth;
 
     public function indexAction() {
         //1. fetch query
@@ -27,6 +28,14 @@ class IndexController extends Yaf_Controller_Abstract {
         //Dump::dump($config);
 
         $this->getView()->assign("list",$mongodb->query());
+
+        var_dump($this->getRequest()->getParams());
+        var_dump($_GET['key']);
+        var_dump($this->getRequest()->isGet());
+        print_r(Yaf_Dispatcher::getInstance()->getRouter()->getRoutes());
+        //$this->getResponse()->setBody("Hello YAF!!!");
+        //var_dump($this->getResponse()->getBody());
+        //$this->getResponse()->response();
 
         //4. render by Yaf, 如果这里返回FALSE, Yaf将不会调用自动视图引擎Render模板
         return TRUE;
@@ -69,6 +78,14 @@ class IndexController extends Yaf_Controller_Abstract {
             echo json_encode($result);
             return False;
         }
+    }
+
+    public function InfoAction(){
+        //$res = $this->getResponse();
+        //$res->setBody("hello");
+        //$res->response();
+        echo "hello";
+        return False;
     }
 
 }

@@ -13,7 +13,10 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
         //把配置保存起来
         $this->config = Yaf_Application::app()->getConfig();
         Yaf_Registry::set('config', $this->config);
-
+        if($this->config->get('debug')){
+            ini_set('display_errors', 1);
+            ini_set('error_reporting', E_ALL);
+        }
     }
 
     public function _initPlugin(Yaf_Dispatcher $dispatcher) {
@@ -31,36 +34,35 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
             $router->addConfig($routes);
         }
 
-        //继续添加路由
+        /*
         $route = new Yaf_Route_Regex(
-            'product/([\w]+)',
+            '/product/([\w]+)',
             array(
+                'module' => 'index',
                 'controller' => 'index',
                 'action' => 'info'
-            ),
-            array(
-                1 => 'ident'
             )
         );
         $router->addRoute('dummy',$route);
-
+        */
     }
 
-    public function _initLocalNamespace(){
-        /* 全局类，自动加载，做以下事情
-        *  修改/etc/php.ini , 增加 yaf.library 全局类目录路径，重启php-fpm
-        *  在全局类目录下新建文件，多层目录使用 外层目录_内层目录_类名的方式定义类的名字
-        *  本地类，需使用registerLocalNamespace()注册
-        */
 
-        //注册本地类，凡是以Local开头的都是本地类
-        Yaf_Loader::getInstance()->registerLocalNamespace(array("Local","Twig"));
-      }
-
+#    public function _initLocalNamespace(){
+#        /* 全局类，自动加载，做以下事情
+#        *  修改/etc/php.ini , 增加 yaf.library 全局类目录路径，重启php-fpm
+#        *  在全局类目录下新建文件，多层目录使用 外层目录_内层目录_类名的方式定义类的名字
+#        *  本地类，需使用registerLocalNamespace()注册
+#        */
+#
+#        //注册本地类，凡是以Local开头的都是本地类
+#        Yaf_Loader::getInstance()->registerLocalNamespace(array("Local","Twig",""));
+#      }
+#
 
     public function _initView(Yaf_Dispatcher $dispatcher){
         //在这里注册自己的view控制器，例如smarty,firekylin
-        $twig = new Twig_View( dirname(__FILE__) . "/views/");
+        $twig = new Twig_View( APPLICATION_PATH . "/application/views/");
         $dispatcher->setView($twig);
     }
 
